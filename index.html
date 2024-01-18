@@ -3,19 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Deck</title>
+    <link rel="stylesheet" href="css/createdeck.css" />
     <link href="css/site.css" rel="stylesheet" />
-    <title>Pokemon TCG Project</title>
   </head>
   <body>
-    <div id="game-board">
-      <div id="npc-player">
-        <div class="boss">
-          <img
-            src="https://images.pokemontcg.io/swsh6/21_hires.png"
-            alt="Blaziken VMAX designed by AKIRA EGAWA"
-          />
+    <button id="makeDeck">Make a Deck</button>
+    <button id="startGame">Start Game with random deck</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <span id="submitPoke">&times;</span> -->
+          <h2>Pick 20 Basic Pokemons</h2>
+          <button id="submitPoke">Start Game</button>
+          <button id="cancel">Cancel</button>
         </div>
+        <div id="modal-content" class="modal-body"></div>
+        <div class="modal-footer"></div>
       </div>
+      <div id="selected-pokes">
+        <h1>Selected Cards</h1>
+      </div>
+    </div>
+
+    <div id="game-board">
+      <div id="npc-player"></div>
       <div id="main-player">
         <div id="prize-cards"></div>
         <div id="bae-container">
@@ -40,7 +55,6 @@
       </div>
       <div id="player-hand-container"></div>
     </div>
-
-    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/deck.js"></script>
   </body>
 </html>

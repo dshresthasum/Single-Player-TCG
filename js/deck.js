@@ -1,13 +1,14 @@
 import * as helper from "./elements.js";
 import * as urls from "./urls.js";
+import { distributeCards, loadBossCard } from "./board.js";
 // Get the modal
 var modal = document.getElementById("myModal");
-
+let closeBtn = helper.getID("cancel");
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+var btn = document.getElementById("makeDeck");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+var span = helper.getID("submitPoke");
 
 // When the user clicks on the button, open the modal
 btn.onclick = function () {
@@ -16,17 +17,78 @@ btn.onclick = function () {
   createDeckManually();
 };
 
+helper.getID("startGame").onclick = function () {
+  createCardDeck(false);
+};
 // When the user clicks on <span> (x), close the modal
 span.onclick = function () {
   modal.style.display = "none";
 };
 
+closeBtn.onclick = function () {
+  modal.style.display = "none";
+};
 // When the user clicks anywhere outside of the modal, close it
 // window.onclick = function (event) {
 //   if (event.target == modal) {
 //     modal.style.display = "none";
 //   }
 // };
+
+/*******
+ * Generate a deck of 60 cards
+ * 20 Pokemon Cards
+ * 20 Energy Cards
+ * 20 Trainer Cards => 7 Item, 7 Stadium and 6 Supporter Cards
+ *******/
+let createCardDeck = async (manual = false) => {
+  let deckCards = [];
+  await Promise.all([
+    fetch(urls.CARDS + "?q=supertype:pokemon%20subtypes:basic"),
+    fetch(urls.CARDS + "?q=supertype:energy%20subtypes:basic"),
+    fetch(urls.CARDS + "?q=supertype:trainer%20subtypes:item"),
+    fetch(urls.CARDS + "?q=supertype:trainer%20subtypes:stadium"),
+    fetch(urls.CARDS + "?q=supertype:trainer%20subtypes:supporter"),
+  ]).then(
+    async ([
+      basicPokemons,
+      basicEnergy,
+      basicTrainerItem,
+      basicTrainerStadium,
+      basicTrainerSupporter,
+    ]) => {
+      let basicPokeList = [];
+      if (manual) {
+        basicPokeList = JSON.parse(sessionStorage.getItem("manualpoke"));
+      } else {
+        let basicP = await basicPokemons.json();
+        basicPokeList = basicP.data.slice(0, 20);
+      }
+      let basicE = await basicEnergy.json();
+      let basicEnergyList = basicE.data.slice(0, 20);
+
+      let basicTI = await basicTrainerItem.json();
+      let basicTIList = basicTI.data.slice(0, 7);
+
+      let basicTSt = await basicTrainerStadium.json();
+      let basicTStList = basicTSt.data.slice(0, 7);
+
+      let basicTSu = await basicTrainerSupporter.json();
+      let basicTSuist = basicTSu.data.slice(0, 6);
+      //console.log(basicPokeList);
+      deckCards = [
+        ...basicPokeList,
+        ...basicEnergyList,
+        ...basicTIList,
+        ...basicTStList,
+        ...basicTSuist,
+      ];
+    }
+  );
+  console.log(deckCards);
+  distributeCards(deckCards);
+  //return deckCards;
+};
 
 let createDeckManually = async () => {
   let displaySelectedPoke = helper.getID("selected-pokes");
@@ -57,14 +119,14 @@ let createDeckManually = async () => {
         selectedDiv.className = "selected";
         selectedDiv.innerHTML = `<span>${element.name}</span>`;
 
-        let btnClose = document.createElement("button");
-        btnClose.textContent = "x";
+        let btnItemClose = document.createElement("button");
+        btnItemClose.textContent = "x";
 
         let attr = document.createAttribute("for");
         attr.value = element.id;
-        btnClose.setAttributeNode(attr);
+        btnItemClose.setAttributeNode(attr);
 
-        btnClose.addEventListener("click", (event) => {
+        btnItemClose.addEventListener("click", (event) => {
           event.currentTarget.parentNode.remove();
           let attrFor = event.currentTarget.getAttributeNode("for");
           //console.log(attrFor.value);
@@ -78,10 +140,12 @@ let createDeckManually = async () => {
           console.log(index);
         });
 
-        selectedDiv.append(btnClose);
+        selectedDiv.append(btnItemClose);
 
         displaySelectedPoke.append(selectedDiv);
       } else {
+        //span.classList.add("close");
+        sessionStorage.setItem("manualpoke", JSON.stringify(selectedPokes));
         alert("Limit Reached");
       }
 
@@ -89,7 +153,16 @@ let createDeckManually = async () => {
     });
   });
   console.log(data);
-  return selectedPokes;
+  span.addEventListener("click", () => {
+    if (selectedPokes.length < 20) {
+      alert("You must select exactly 20 cards");
+      modal.style.display = "flex";
+      modal.style.flexDirection = "row";
+    } else {
+      createCardDeck(true);
+    }
+  });
+  //return selectedPokes;
 };
 
-export { createDeckManually };
+export { createCardDeck, createDeckManually };

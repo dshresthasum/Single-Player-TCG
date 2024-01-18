@@ -1,6 +1,6 @@
 import * as helper from "./elements.js";
 import * as urls from "./urls.js";
-//import { createDeckManually } from "./deck.js";
+//import { createCardDeck } from "./deck.js";
 
 const npcPlayer = helper.getID("npc-player");
 let deck = [];
@@ -49,57 +49,6 @@ let loadBossCard = async () => {
 };
 
 /*******
- * Generate a deck of 60 cards
- * 20 Pokemon Cards
- * 20 Energy Cards
- * 20 Trainer Cards => 7 Item, 7 Stadium and 6 Supporter Cards
- *******/
-let createCardDeck = async (manual = true) => {
-  let basicFromManual = [];
-
-  let deckCards = [];
-  await Promise.all([
-    fetch(urls.CARDS + "?q=supertype:pokemon%20subtypes:basic"),
-    fetch(urls.CARDS + "?q=supertype:energy%20subtypes:basic"),
-    fetch(urls.CARDS + "?q=supertype:trainer%20subtypes:item"),
-    fetch(urls.CARDS + "?q=supertype:trainer%20subtypes:stadium"),
-    fetch(urls.CARDS + "?q=supertype:trainer%20subtypes:supporter"),
-  ]).then(
-    async ([
-      basicPokemons,
-      basicEnergy,
-      basicTrainerItem,
-      basicTrainerStadium,
-      basicTrainerSupporter,
-    ]) => {
-      let basicP = await basicPokemons.json();
-      let basicPokeList = basicP.data.slice(0, 20);
-
-      let basicE = await basicEnergy.json();
-      let basicEnergyList = basicE.data.slice(0, 20);
-
-      let basicTI = await basicTrainerItem.json();
-      let basicTIList = basicTI.data.slice(0, 7);
-
-      let basicTSt = await basicTrainerStadium.json();
-      let basicTStList = basicTSt.data.slice(0, 7);
-
-      let basicTSu = await basicTrainerSupporter.json();
-      let basicTSuist = basicTSu.data.slice(0, 6);
-      //console.log(basicPokeList);
-      deckCards = [
-        ...basicPokeList,
-        ...basicEnergyList,
-        ...basicTIList,
-        ...basicTStList,
-        ...basicTSuist,
-      ];
-    }
-  );
-  return deckCards;
-};
-
-/*******
  * draw certain number of cards from a specified deck
  *******/
 let drawCardsFromDeck = (deck, count) => {
@@ -128,8 +77,14 @@ let createBenchStack = () => {
  * Distribute the cards to the player
  * Allocate 6 prize cards
  *******/
-let distributeCards = async () => {
-  let deckCards = await createCardDeck();
+let distributeCards = async (deckCards) => {
+  //let deckCards = await createCardDeck();
+  helper.getID("game-board").style.display = "block";
+  helper.getID("makeDeck").style.display = "none";
+  helper.getID("startGame").style.display = "none";
+
+  loadBossCard();
+
   let shuffledDeck = shuffle(deckCards);
   createBenchStack();
   let playerHandCards = drawCardsFromDeck(shuffledDeck, 7);
