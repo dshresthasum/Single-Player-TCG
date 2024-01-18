@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="css/site.css" rel="stylesheet" />
+    <title>Pokemon TCG Project</title>
+  </head>
+  <body>
+    <div id="game-board">
+      <div id="npc-player">
+        <div class="boss">
+          <img
+            src="https://images.pokemontcg.io/swsh6/21_hires.png"
+            alt="Blaziken VMAX designed by AKIRA EGAWA"
+          />
+        </div>
+      </div>
+      <div id="main-player">
+        <div id="prize-cards"></div>
+        <div id="bae-container">
+          <!-- bench, active-spot-energy-->
+          <div id="ae-container">
+            <div id="main-card"></div>
+            <div id="energy"></div>
+            <div class="deck">
+              <img
+                src="./assets/cardback.jpg"
+                alt="Blaziken VMAX designed by AKIRA EGAWA"
+              />
+            </div>
+          </div>
+          <div id="benches"></div>
+        </div>
+        <div id="dd-container">
+          <!--deck, discard-->
+
+          <div id="discard-pile"></div>
+        </div>
+      </div>
+      <div id="player-hand-container"></div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

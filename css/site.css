@@ -1,0 +1,169 @@
+body {
+  width: 100%;
+  margin: 0 auto;
+}
+
+img {
+  width: 100%;
+}
+
+#npc-player,
+#main-player {
+  padding: 1em;
+}
+
+#npc-player {
+  background: rgba(255, 127, 80, 0.479);
+}
+
+#main-player {
+  background: rgba(80, 112, 255, 0.479);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2em;
+}
+
+#bae-container,
+#prize-cards {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 2em;
+  margin: 0.5em 2em;
+  flex-direction: column;
+}
+
+#prize-cards,
+#discard-pile {
+  background: thistle;
+  min-height: 10em;
+  width: 9em;
+  padding: 1em;
+  border-radius: 1em;
+}
+#ae-container,
+#benches,
+#player-hand-container {
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+  padding: 0.5em;
+  border-radius: 1em;
+  position: relative;
+}
+#dd-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 2em;
+  margin: 0.5em 2em;
+  flex-direction: column;
+}
+
+#player-hand-container {
+  background: darkkhaki;
+}
+
+.deck,
+.bench,
+.discard,
+#energy,
+#main-card,
+.prize {
+  width: 9em;
+  padding: 0.25em;
+  position: relative;
+  min-height: 200px;
+  border-radius: 1em;
+}
+
+#main-card {
+  background: thistle;
+}
+
+#energy::before,
+.bench::before,
+#main-card::before,
+.prize::before,
+#discard-pile::before {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  width: 9em;
+}
+
+#main-card::before {
+  content: "Active Spot";
+}
+
+#energy {
+  background: thistle;
+}
+
+.bench {
+  border: 1px solid aquamarine;
+}
+.bench::before {
+  content: "Bench";
+}
+#energy::before {
+  content: "Energy";
+}
+.prize::before {
+  content: "Prize";
+}
+#discard-pile::before {
+  content: "Discard";
+}
+.bench img {
+  position: relative;
+}
+
+#benches {
+  background: aqua;
+  width: 100%;
+}
+.player-hand {
+  width: 100%;
+}
+
+.player-hand img {
+  width: 12%;
+  padding: 0.5em;
+}
+
+/* .prize {
+  height: 15em;
+  position: relative;
+} */
+
+.prize img {
+  width: 100%;
+  position: relative;
+}
+.center-pokeball {
+  width: 2em;
+  height: 2em;
+  border-radius: 1em;
+  border: 1px solid black;
+}
+
+.boss {
+  width: 12em;
+  border: 1px solid green;
+  background: firebrick;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0.5em;
+  border-radius: 0.75em;
+}
+
+.boss img {
+  width: 100%;
+}
+
+#discard-pile img {
+  position: relative;
+}
