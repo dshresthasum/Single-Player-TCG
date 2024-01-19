@@ -14,10 +14,12 @@ var span = helper.getID("submitPoke");
 btn.onclick = function () {
   modal.style.display = "flex";
   modal.style.flexDirection = "row";
+  document.querySelector(".startPage").style.display = "none";
   createDeckManually();
 };
 
 helper.getID("startGame").onclick = function () {
+  document.querySelector(".startPage").style.display = "none";
   createCardDeck(false);
 };
 // When the user clicks on <span> (x), close the modal
@@ -159,6 +161,7 @@ let createDeckManually = async () => {
       modal.style.display = "flex";
       modal.style.flexDirection = "row";
     } else {
+      helper.getID("modal-content").innerHTML = "";
       createCardDeck(true);
     }
   });

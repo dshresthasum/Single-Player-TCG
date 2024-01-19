@@ -8,8 +8,10 @@
     <link href="css/site.css" rel="stylesheet" />
   </head>
   <body>
-    <button id="makeDeck">Make a Deck</button>
-    <button id="startGame">Start Game with random deck</button>
+    <div class="startPage">
+      <button id="makeDeck">Make a Deck</button>
+      <button id="startGame">Start Game with random deck</button>
+    </div>
 
     <!-- The Modal -->
     <div id="myModal" class="modal">
@@ -29,33 +31,20 @@
       </div>
     </div>
 
-    <div id="game-board">
-      <div id="npc-player"></div>
-      <div id="main-player">
-        <div id="prize-cards"></div>
-        <div id="bae-container">
-          <!-- bench, active-spot-energy-->
-          <div id="ad-container">
-            <div id="main-card"></div>
-            <!-- <div id="energy"></div> -->
-            <div id="game-deck" class="deck">
-              <img
-                src="./assets/cardback.jpg"
-                alt="Blaziken VMAX designed by AKIRA EGAWA"
-              />
-            </div>
-          </div>
-          <div id="benches"></div>
-        </div>
-        <div id="dd-container">
-          <!--deck, discard-->
-
-          <div id="discard-pile"></div>
-        </div>
+    <div id="game-board" class="container">
+      <div id="npc-player" class="bossSpot"></div>
+      <div id="main-card" class="activeSpot"></div>
+      <div id="game-deck" class="cardDeck">
+        <img src="./assets/cardback.jpg" alt="pokemon card" />
       </div>
-      <div id="player-hand-container">
+      <div id="discard-pile" class="discard"></div>
+      <div id="benches" class="bench"></div>
+      <div id="prize-cards" class="prize"></div>
+      <div id="player-hand-container" class="playerHand">
         <div class="player-hand"></div>
       </div>
+      <div class="endTurn">End Turn</div>
+      <div class="lightning"></div>
     </div>
     <script type="module" src="js/deck.js"></script>
   </body>

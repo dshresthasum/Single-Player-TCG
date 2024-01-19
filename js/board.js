@@ -35,15 +35,15 @@ let loadBossCard = async () => {
   let results = await helper.getData(urls.CARDS + "?q=hp:[320 TO *]");
   let boss = results[helper.getRandom(0, results.length)];
 
-  let bossDiv = document.createElement("div");
-  bossDiv.className = "boss";
+  // let bossDiv = document.createElement("div");
+  // bossDiv.className = "boss";
 
   let bossImg = document.createElement("img");
   bossImg.src = boss.images.large;
   bossImg.alt = `${boss.name} designed by ${boss.artist}`;
 
-  bossDiv.append(bossImg);
-  npcPlayer.append(bossDiv);
+  // bossDiv.append(bossImg);
+  npcPlayer.append(bossImg);
 };
 
 /*******
@@ -53,9 +53,9 @@ let loadBossCard = async () => {
 let loadPrizeCards = (deck) => {
   let prizeCardsList = drawCardsFromDeck(deck, 6);
 
-  let prizeDiv = document.createElement("div");
-  prizeDiv.className = "prize";
-  let top = 0;
+  // let prizeDiv = document.createElement("div");
+  // prizeDiv.className = "prize";
+  // let top = 0;
   prizeCardsList.forEach((item, index) => {
     let prizeImg = document.createElement("img");
     prizeImg.id = item.id;
@@ -65,16 +65,16 @@ let loadPrizeCards = (deck) => {
 
     index === 0
       ? (prizeImg.style.marginTop = "0px")
-      : (prizeImg.style.marginTop = "-150px");
+      : (prizeImg.style.marginTop = "-170px");
 
     //draggable
     prizeImg.draggable = true;
     prizeImg.ondragstart = helper.drag;
 
-    prizeDiv.appendChild(prizeImg);
+    helper.getID("prize-cards").appendChild(prizeImg);
   });
 
-  helper.getID("prize-cards").appendChild(prizeDiv);
+  //helper.getID("prize-cards").appendChild(prizeDiv);
 };
 
 /*******
@@ -99,7 +99,6 @@ let drawCardsFromDeck = (deck, count) => {
 let createBenchStack = () => {
   for (let i = 0; i < 5; i++) {
     let benchDiv = document.createElement("div");
-    benchDiv.className = "bench";
     benchDiv.id = "bench" + (i + 1);
 
     //droppable
@@ -138,7 +137,7 @@ let loadPlayerHandCards = (shuffledDeck, noOfCards) => {
  * Allocate 6 prize cards
  *******/
 let distributeCards = async (deckCards) => {
-  helper.getID("game-board").style.display = "block";
+  helper.getID("game-board").style.display = "grid";
   helper.getID("makeDeck").style.display = "none";
   helper.getID("startGame").style.display = "none";
 

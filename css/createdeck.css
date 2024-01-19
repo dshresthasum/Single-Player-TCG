@@ -15,9 +15,11 @@
 
 /* Modal Header */
 .modal-header {
-  padding: 2px 16px;
-  background-color: #5cb85c;
+  padding: 15px 16px;
+  background-color: #2b1a7f;
   color: white;
+  margin: 20px;
+  border-radius: 1em;
 }
 
 /* Modal Body */
@@ -28,14 +30,14 @@
 /* Modal Footer */
 .modal-footer {
   padding: 2px 16px;
-  background-color: #5cb85c;
+  background-color: #2b1a7f;
   color: white;
 }
 
 /* Modal Content */
 .modal-content {
   position: relative;
-  background-color: #fefefe;
+  background-color: #181847;
   margin: auto;
   padding: 0;
   border: 1px solid #888;
@@ -45,6 +47,9 @@
   animation-duration: 0.4s;
 }
 
+#modal-content img {
+  width: 100%;
+}
 /* Add Animation */
 @keyframes animatetop {
   from {
@@ -77,6 +82,10 @@
   grid-template-columns: repeat(6, 1fr);
   gap: 0.5em;
   justify-items: center;
+  border-radius: 1em;
+  background: linear-gradient(134deg, black, transparent);
+  margin: 20px;
+  padding: 20px 0;
 }
 .card {
   position: relative;
@@ -89,10 +98,11 @@ img {
 #selected-pokes {
   display: flex;
   flex-direction: column;
-  background: thistle;
   position: fixed;
   right: 0;
-  font-size: 14px;
+  font-size: 12px;
+  color: white;
+  padding-right: 17px;
 }
 .selected {
   display: inline-block;
@@ -101,6 +111,7 @@ img {
   border: 1px solid gray;
   border-radius: 5px;
   color: black;
+  margin: 2px;
 }
 
 .disable {

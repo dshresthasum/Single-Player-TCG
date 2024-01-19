@@ -1,180 +1,151 @@
 body {
   width: 100%;
   margin: 0 auto;
+  background: #2b1a7f;
 }
 
+.startPage {
+  display: flex;
+  flex-direction: column;
+  width: 10%;
+  margin: 0 auto;
+  min-height: 600px;
+  justify-content: center;
+  gap: 3em;
+}
+
+.startPage button {
+  padding: 10px;
+}
 img {
   width: 100%;
 }
 #game-board {
   display: none;
 }
-#npc-player,
-#main-player {
-  padding: 1em;
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    ". . . . . . . . . . . . . . . . . ."
+    ". bossSpot bossSpot bossSpot lightning lightning  activeSpot activeSpot . . cardDeck cardDeck . . discard discard . ."
+    ". bossSpot bossSpot bossSpot lightning lightning activeSpot activeSpot . . cardDeck cardDeck . . discard discard . ."
+    ". bossSpot bossSpot bossSpot lightning lightning  activeSpot activeSpot . . cardDeck cardDeck . . discard discard . ."
+    ". bossSpot bossSpot bossSpot . . . . . . . . . . . . . ."
+    ". . . . . bench bench bench bench bench bench bench bench bench bench bench . ."
+    ". prize prize . . bench bench bench bench bench bench bench bench bench bench bench . ."
+    ". prize prize . . bench bench bench bench bench bench bench bench bench bench bench . ."
+    ". prize prize . . . . . . . . . . . . . . ."
+    ". prize prize . playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand . ."
+    ". prize prize . playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand . ."
+    ". prize prize . playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand playerHand endTurn endTurn"
+    ". . . . . . . . . . . . . . . . . .";
+  background: linear-gradient(134deg, black, transparent);
+  max-height: 940px;
+  width: 95%;
+  margin: 8px auto;
+  border: 2px solid #433;
+  border-radius: 2em;
 }
 
-#npc-player {
-  background: rgba(255, 127, 80, 0.479);
+.bossSpot {
+  grid-area: bossSpot;
+  justify-self: right;
 }
 
-#main-player {
-  background: rgba(80, 112, 255, 0.479);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 2em;
+.activeSpot {
+  grid-area: activeSpot;
 }
 
-#bae-container,
-#prize-cards {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  gap: 2em;
-  margin: 0.5em 2em;
-  flex-direction: column;
+.cardDeck {
+  grid-area: cardDeck;
 }
 
-#prize-cards,
-#discard-pile {
-  background: thistle;
-  min-height: 10em;
-  width: 9em;
-  padding: 1em;
-  border-radius: 1em;
-}
-#ad-container,
-#benches,
-#player-hand-container {
-  display: flex;
-  flex-direction: row;
-  gap: 2em;
-  padding: 0.5em;
-  border-radius: 1em;
-  position: relative;
-}
-
-#ad-container {
-  width: 80%;
-  justify-content: space-evenly;
-}
-
-#dd-container {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  gap: 2em;
-  margin: 0.5em 2em;
-  flex-direction: column;
-}
-
-#player-hand-container {
-  background: darkkhaki;
-}
-
-#player-hand-container img {
-  width: 9em;
-}
-.deck,
-.bench,
-.discard,
-#energy,
-#main-card,
-.prize {
-  width: 9em;
-  padding: 0.25em;
-  position: relative;
-  min-height: 200px;
-  border-radius: 1em;
-}
-
-#main-card {
-  background: thistle;
-}
-
-#energy::before,
-.bench::before,
-#main-card::before,
-.prize::before,
-#discard-pile::before {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: nowrap;
-  justify-content: space-around;
-  width: 9em;
-}
-
-#main-card::before {
-  content: "Active Spot";
-}
-
-#energy {
-  background: thistle;
+.discard {
+  grid-area: discard;
 }
 
 .bench {
-  border: 1px solid aquamarine;
+  grid-area: bench;
 }
-.bench::before {
-  content: "Bench";
+
+.prize {
+  grid-area: prize;
+  border: 1px solid #1a133b;
+  border-radius: 9px;
+  text-align: center;
+  background: #271c5a;
+  padding: 10px 0;
+  width: 80%;
 }
-#energy::before {
-  content: "Energy";
+
+.playerHand {
+  grid-area: playerHand;
 }
-.prize::before {
-  content: "Prize";
+
+.bench,
+.playerHand {
+  justify-self: right;
+  padding: 0.7em;
+  background: #271c5a;
+  border: 1px solid #1a133b;
+  border-radius: 9px;
+  width: 100%;
+  padding: 0 6px;
 }
-#discard-pile::before {
-  content: "Discard";
+
+.endTurn {
+  grid-area: endTurn;
+  border: 1px solid #1a133b;
+  margin: 0 1em;
+  border-radius: 1em;
+  text-align: center;
+  padding: 5px;
+  color: white;
+  line-height: 2em;
+  font-size: 1.5em;
+  background: #4f2347;
 }
-.bench img {
-  position: relative;
+
+img {
+  width: 9em;
+}
+
+.bossSpot img,
+.activeSpot img {
+  width: 12em;
+}
+
+.lightning {
+  grid-area: lightning;
+  background: url("../assets/lightning.png") no-repeat -15px 12px;
 }
 
 #benches {
-  background: aqua;
-  width: 100%;
-}
-.player-hand {
-  width: 100%;
-}
-
-.player-hand img {
-  width: 12%;
-  padding: 0.5em;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  justify-content: space-evenly;
 }
 
-/* .prize {
-  height: 15em;
-  position: relative;
-} */
-
-.prize img {
-  width: 100%;
-  position: relative;
-}
-.center-pokeball {
-  width: 2em;
-  height: 2em;
-  border-radius: 1em;
-  border: 1px solid black;
-}
-
-.boss {
-  width: 12em;
-  border: 1px solid green;
-  background: firebrick;
-  margin: 0 auto;
+#benches div {
+  display: inline-block;
+  padding: 7px;
+  width: 80%;
+  border-radius: 10px;
   text-align: center;
-  padding: 0.5em;
-  border-radius: 0.75em;
 }
 
-.boss img {
-  width: 100%;
+.playerHand img {
+  padding: 5px;
 }
 
-#discard-pile img {
-  position: relative;
+.discard,
+.activeSpot,
+#benches div {
+  background: url("../assets/plus.png") no-repeat center;
 }

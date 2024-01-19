@@ -41,7 +41,7 @@ function drop(ev) {
       elementToDrop.style.marginTop = "-185px";
       elementToDrop.draggable = false;
     } else {
-      elementToDrop.style.marginTop = "-150px";
+      elementToDrop.style.marginTop = "-170px";
     }
 
     elementToDrop.style.boxShadow = "0px -10px 17px rgb(54 29 217 / 51%)";
