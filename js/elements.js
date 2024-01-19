@@ -10,6 +10,7 @@ const getRandom = (min, max) => {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -22,8 +23,14 @@ function drop(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   let elementToDrop = document.getElementById(data);
+  if (
+    ev.currentTarget.childElementCount === 0 &&
+    elementToDrop.attributes.supertype.value === "Pokémon"
+  ) {
+    elementToDrop.style.marginTop = "0px";
 
-  if (ev.currentTarget.childElementCount !== 0) {
+    ev.currentTarget.append(elementToDrop);
+  } else if (ev.currentTarget.childElementCount !== 0) {
     let lastChild = ev.currentTarget.lastChild;
     let style = window.getComputedStyle(lastChild);
     let topValue = style.getPropertyValue("margin-top");
@@ -38,11 +45,11 @@ function drop(ev) {
     }
 
     elementToDrop.style.boxShadow = "0px -10px 17px rgb(54 29 217 / 51%)";
+    ev.currentTarget.append(elementToDrop);
   } else {
-    elementToDrop.style.marginTop = "0px";
+    alert("Place Basic Pokemon Card First");
+    ev.preventDefault();
   }
-
-  ev.currentTarget.append(elementToDrop);
 }
 
 let setDroppable = (id) => {

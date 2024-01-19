@@ -73,6 +73,9 @@ img {
   background: darkkhaki;
 }
 
+#player-hand-container img {
+  width: 9em;
+}
 .deck,
 .bench,
 .discard,

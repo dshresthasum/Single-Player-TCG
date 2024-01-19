@@ -61,6 +61,8 @@ let loadPrizeCards = (deck) => {
     prizeImg.id = item.id;
     prizeImg.src = item.images.small;
     prizeImg.alt = `${item.name} from ${item.set.name} set`;
+    prizeImg.setAttribute("supertype", item.supertype);
+
     index === 0
       ? (prizeImg.style.marginTop = "0px")
       : (prizeImg.style.marginTop = "-150px");
@@ -82,6 +84,9 @@ let drawCardsFromDeck = (deck, count) => {
   let drawnCards = [];
   for (let i = 0; i < count; i++) {
     drawnCards[i] = deck.pop();
+    if (deck.length === 0) {
+      helper.getID("game-deck").innerHTML = "";
+    }
   }
   return drawnCards;
 };
@@ -109,25 +114,24 @@ let createBenchStack = () => {
  * draw 7 cards from top of the deck
  * place the cards on the Player's Hand Slot
  *******/
-let loadPlayerHandCards = (shuffledDeck) => {
-  let playerHandCards = drawCardsFromDeck(shuffledDeck, 7);
+let loadPlayerHandCards = (shuffledDeck, noOfCards) => {
+  let playerHandCards = drawCardsFromDeck(shuffledDeck, noOfCards);
 
-  let playerHandDiv = document.createElement("div");
-  playerHandDiv.className = "player-hand";
+  let playerHandDiv = document.querySelector(".player-hand");
 
   playerHandCards.forEach((card) => {
     let handCardImg = document.createElement("img");
     handCardImg.id = card.id;
     handCardImg.src = card.images.small;
     handCardImg.alt = `${card.name} from ${card.set.name} set`;
-
+    handCardImg.setAttribute("supertype", card.supertype);
     //draggable
     handCardImg.draggable = true;
     handCardImg.ondragstart = helper.drag;
 
     playerHandDiv.appendChild(handCardImg);
+    //helper.getID("player-hand-container").append(handCardImg);
   });
-  helper.getID("player-hand-container").append(playerHandDiv);
 };
 /*******
  * Distribute the cards to the player
@@ -143,7 +147,11 @@ let distributeCards = async (deckCards) => {
   loadBossCard();
   loadPrizeCards(shuffledDeck);
   createBenchStack();
-  loadPlayerHandCards(shuffledDeck);
+  loadPlayerHandCards(shuffledDeck, 7);
+
+  helper.getID("game-deck").addEventListener("click", () => {
+    loadPlayerHandCards(shuffledDeck, 1);
+  });
 
   //Set up discard pile
   helper.setDroppable("discard-pile");
