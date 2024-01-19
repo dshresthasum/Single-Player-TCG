@@ -44,7 +44,7 @@ img {
   padding: 1em;
   border-radius: 1em;
 }
-#ae-container,
+#ad-container,
 #benches,
 #player-hand-container {
   display: flex;
@@ -54,6 +54,12 @@ img {
   border-radius: 1em;
   position: relative;
 }
+
+#ad-container {
+  width: 80%;
+  justify-content: space-evenly;
+}
+
 #dd-container {
   display: flex;
   align-items: center;

@@ -1,9 +1,7 @@
 import * as helper from "./elements.js";
 import * as urls from "./urls.js";
-//import { createCardDeck } from "./deck.js";
 
 const npcPlayer = helper.getID("npc-player");
-let deck = [];
 
 /*******
  * Shuffling an array
@@ -49,6 +47,35 @@ let loadBossCard = async () => {
 };
 
 /*******
+ * draw 6 cards from the deck
+ * place the cards on the Prize Cards Slot
+ *******/
+let loadPrizeCards = (deck) => {
+  let prizeCardsList = drawCardsFromDeck(deck, 6);
+
+  let prizeDiv = document.createElement("div");
+  prizeDiv.className = "prize";
+  let top = 0;
+  prizeCardsList.forEach((item, index) => {
+    let prizeImg = document.createElement("img");
+    prizeImg.id = item.id;
+    prizeImg.src = item.images.small;
+    prizeImg.alt = `${item.name} from ${item.set.name} set`;
+    index === 0
+      ? (prizeImg.style.marginTop = "0px")
+      : (prizeImg.style.marginTop = "-150px");
+
+    //draggable
+    prizeImg.draggable = true;
+    prizeImg.ondragstart = helper.drag;
+
+    prizeDiv.appendChild(prizeImg);
+  });
+
+  helper.getID("prize-cards").appendChild(prizeDiv);
+};
+
+/*******
  * draw certain number of cards from a specified deck
  *******/
 let drawCardsFromDeck = (deck, count) => {
@@ -59,6 +86,11 @@ let drawCardsFromDeck = (deck, count) => {
   return drawnCards;
 };
 
+/*******
+ * set up bench for the player
+ * consists of 5 bench spots for player to place cards
+ * each bench can be stacked with multiple cards
+ *******/
 let createBenchStack = () => {
   for (let i = 0; i < 5; i++) {
     let benchDiv = document.createElement("div");
@@ -74,19 +106,10 @@ let createBenchStack = () => {
 };
 
 /*******
- * Distribute the cards to the player
- * Allocate 6 prize cards
+ * draw 7 cards from top of the deck
+ * place the cards on the Player's Hand Slot
  *******/
-let distributeCards = async (deckCards) => {
-  //let deckCards = await createCardDeck();
-  helper.getID("game-board").style.display = "block";
-  helper.getID("makeDeck").style.display = "none";
-  helper.getID("startGame").style.display = "none";
-
-  loadBossCard();
-
-  let shuffledDeck = shuffle(deckCards);
-  createBenchStack();
+let loadPlayerHandCards = (shuffledDeck) => {
   let playerHandCards = drawCardsFromDeck(shuffledDeck, 7);
 
   let playerHandDiv = document.createElement("div");
@@ -105,50 +128,27 @@ let distributeCards = async (deckCards) => {
     playerHandDiv.appendChild(handCardImg);
   });
   helper.getID("player-hand-container").append(playerHandDiv);
+};
+/*******
+ * Distribute the cards to the player
+ * Allocate 6 prize cards
+ *******/
+let distributeCards = async (deckCards) => {
+  helper.getID("game-board").style.display = "block";
+  helper.getID("makeDeck").style.display = "none";
+  helper.getID("startGame").style.display = "none";
 
-  //Start of prize pool
-  let trainerCardsList = deckCards.filter(
-    (item) => item.supertype.toLowerCase() === "trainer"
-  );
+  let shuffledDeck = shuffle(deckCards);
 
-  let shuffledTrainerCardList = shuffle(trainerCardsList);
-  let prizeCardsList = drawCardsFromDeck(shuffledTrainerCardList, 6);
-
-  let prizeDiv = document.createElement("div");
-  prizeDiv.className = "prize";
-  let top = 0;
-  prizeCardsList.forEach((item, index) => {
-    let prizeImg = document.createElement("img");
-    prizeImg.id = item.id;
-    prizeImg.src = item.images.small;
-    prizeImg.alt = `${item.name} from ${item.set.name} set`;
-    index === 0
-      ? (prizeImg.style.marginTop = "0px")
-      : (prizeImg.style.marginTop = "-150px");
-    // prizeImg.style.top = top + "rem";
-    // top += 3;
-
-    //draggable
-    prizeImg.draggable = true;
-    prizeImg.ondragstart = helper.drag;
-
-    prizeDiv.appendChild(prizeImg);
-  });
-
-  helper.getID("prize-cards").appendChild(prizeDiv);
-
-  prizeCardsList.forEach((item) => {
-    console.log(shuffledDeck.indexOf(item));
-    shuffledDeck.splice(shuffledDeck.indexOf(item), 1);
-  });
-  //END OF prize pool
-
-  console.log(shuffledDeck);
+  loadBossCard();
+  loadPrizeCards(shuffledDeck);
+  createBenchStack();
+  loadPlayerHandCards(shuffledDeck);
 
   //Set up discard pile
   helper.setDroppable("discard-pile");
   helper.setDroppable("main-card");
-  helper.setDroppable("energy");
+  //helper.setDroppable("energy");
 };
 
 export { loadBossCard, distributeCards };

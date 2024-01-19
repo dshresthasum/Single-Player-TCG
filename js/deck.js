@@ -1,6 +1,6 @@
 import * as helper from "./elements.js";
 import * as urls from "./urls.js";
-import { distributeCards, loadBossCard } from "./board.js";
+import { distributeCards } from "./board.js";
 // Get the modal
 var modal = document.getElementById("myModal");
 let closeBtn = helper.getID("cancel");
@@ -165,4 +165,4 @@ let createDeckManually = async () => {
   //return selectedPokes;
 };
 
-export { createCardDeck, createDeckManually };
+export { createCardDeck };

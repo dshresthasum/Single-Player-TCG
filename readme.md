@@ -1,6 +1,6 @@
 # About the Game
 
-This is a customized version of Pokemon Trading Card Game. Instead of a regular 2 player mode, we are going to create a single player version with a goal to defeat a randomly generated boss.
+This is a customized version of **Pokemon Trading Card Game**. Instead of a regular 2 player mode, we are going to create a single player version with a goal of defeating a randomly generated boss.
 
 ## 1. Board
 
@@ -16,7 +16,7 @@ This is a customized version of Pokemon Trading Card Game. Instead of a regular 
 
 ## 3. Player
 
-- A player is the person who will be playing the game with a target to defeat the boss.
+- A player is the person who will be playing the game with a goal to defeat the boss.
 - Player has the flexibility of creating a deck or choose a randomly generated deck
 - First turn of the game is always the player.
 - In the first turn the player should place a basic pokemon card in the "Active Spot" section. Whatever the attack value is in the card, the boss will be dealt with equal damage in the first round
@@ -26,15 +26,14 @@ This is a customized version of Pokemon Trading Card Game. Instead of a regular 
 - A Deck is a collection of exactly 60 cards.
 - There are 3 categries of cards in the deck - Pokemon Cards, Trainer Cards and Energy Cards
 - Each category has 20 cards
-- Deck can either be randomly generated or the player can create by selecting cards
+- Out of 20 **Trainer Cards**, there will be **7 Item Cards**, **7 Stadium Cards** and **6 Supporter Cards**
+- Deck can either be randomly generated or the player can create by selecting **20 Pokemon** cards. The **Trainer Cards** and **Energy Cards** are generated randomly irrespecitive of game type.
 
-### 4.1. Creating a Deck by the User
+### 4.1. Creating a Deck by the Player
 
-- The interface to choose the cards must show all cards
-- All the cards must be basic type
-- It should also have the option to filter the cards based on "set" and "type".
-- A deck must have exactly 60 cards. The player can choose only 20 pokemon cards
-- The upper limit of any card with the same name is 4.
+- The player will have a list of **Basic Pokemon Cards** to choose from.
+- Player must choose exactly 20 **Basic Pokemon Cards**
+- The upper limit of any card with the same Pokemon name is 4.
   ![interface to allow uses to choose cards](assets/create_deck.png)
 
 ### 4.2. Creating a Deck Programmatically
@@ -45,15 +44,19 @@ This is a customized version of Pokemon Trading Card Game. Instead of a regular 
 
 ## 5. Gameplay
 
-- After a deck is created, the player is assigned 7 cards from the top of the deck
-- 4 prize card are randomly picked from the deck. Prize cards are either trainer cards or energy cards
-- Once the cards are distributed, the player will choose a basic card and place it in "Active Spot" section of the board.
-- If the player does not have a basic card in the first 7 assigned card, a random basic card is withdrawn from the deck and placed in the "Active Spot" Section
-- Player deals damage to the boss that is equal to the damage attribute in the card
-- Reduce the HP of the boss by the amount of damage dealt
-- Next turn is for the boss. The boss deals a random damage to the player.
-- Mark the damage dealt and reduce the HP of the player by the damage amount.
-- After the first round, each turn for the player will be marked by following set of rules
+- The game heavily relies on the Pokemon TCG game, thus all the rules of that game applies here.
+- The difference is this game is not a two player, rather a single player game to fight a ranndomly generated boss.
+- This is a turn based game in which the player always attacks first.
+- A random boss is summoned and placed in the **Boss Card** slot.
+- A deck is created either manually or automatically
+- An automatic deck creation involves randomly selecting 20 of each (Trainer, Pokemon and Energy Cards). The deck is then shuffled.
+- Manual Deck creation involves allowing the player to select 20 Pokemon cards. Trainer and Energy cards are randomly assigned. The deck is then shuffled.
+- After a deck is created, the player is assigned 7 cards from the top of the deck and assigned to **Players Hand Cards** spot
+- 6 prize cards are picked from the top of the deck and placed in the **Prize Cards** spot
+- Once the cards are distributed, the player will choose a **Basic Pokemon Card** and place it in **Active Spot** section of the board.
+- If the player does not posses a basic pokemon card, a random basic card is withdrawn from the deck and placed in the **Active Spot** section
+- The game starts with a players turn. Each turn for the player involves following set of activities
+
   1. Draw a card.
   2. Do any of the following actions in any order:
      1. Put Basic Pokémon cards from your hand onto your Bench (as many as you want).
@@ -63,19 +66,18 @@ This is a customized version of Pokemon Trading Card Game. Instead of a regular 
      5. Retreat your Active Pokémon (only once per turn).
      6. Use Abilities (as many as you want).
   3. Attack. Then, end your turn.
+
+- After every attack (by the player or the boss), the HP of the enemy will reduce by attack attribute on the card.
+- The game continues until one of the party is defeated.
+- **_Player Win Conditions:_**
+  1. Lower Boss HP to 0
+- **_Player Lose Conditions:_**
+  1. The HP of the **Pokemon Card** in the **Active Spot** is reduced to 0.
+  2. Run out of all the cards in **Prize Card Spot** and **Player's Hand** before reducing boss HP to 0.
+  3. No remaining cards in the **Deck** and all the cards in h**Prize Card Spot** and **Player's Hand** are used before reducing boss HP to 0.
 - Visit the link for detailed rules [Pokemon Card Game Rule Book](https://www.pokemon.com/static-assets/content-assets/cms2/pdf/trading-card-game/rulebook/par_rulebook_en.pdf)
 
-# Make a Game
+# References
 
-We will be using Pokemon TCG API for this project. Click on [this link](https://docs.pokemontcg.io/) for API documentation.
-
-## Requirements
-
-| Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Marks |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----: |
-| 1. Generate a random pokemon boss with high HP (around 600) and low attack (randomize between 5 and 10 damage) value                                                                                                                                                                                                                                                                                                                                                                                                                                   |     2 |
-| 2. Allow player to create a deck by selecting Pokemon Cards. Refer to "Deck" section in "About the Game"                                                                                                                                                                                                                                                                                                                                                                                                                                               |     2 |
-| 3. Initiate the game by distributing cards in following way:<ul><li>Shuffle the card deck</li><li>Place the deck in the **Deck** section</li><li>Distribute 7 Cards from top of the deck to the player</li><li>Add 6 random **Trainer Cards** cards from the deck to the **Prize Cards** section</li><li>If the player has a **Basic Pokemon Card**, let the user place the card in the **Active Spot** section</li><li>If the player does not possess a **Basic Pokemon Card**, place a random card from the deck into the **Active Spot** </li></ul> |     5 |
-| 4. Implement the **Gameplay**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |    15 |
-| 5. Win Condition: Lower the HP of the boss to 8                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |     2 |
-| 6. Lose Condition: <ul><li>Player runs out of cards in the deck</li><li>All of the players' **Pokemon Cards** HP is reduced to 0</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                             |     4 |
+- [Pokemon TCG API documentation](https://docs.pokemontcg.io/)
+- [Pokemon TCG Rule Book](https://www.pokemon.com/static-assets/content-assets/cms2/pdf/trading-card-game/rulebook/par_rulebook_en.pdf)
