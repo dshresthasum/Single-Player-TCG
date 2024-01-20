@@ -33,15 +33,15 @@ function shuffle(array) {
  *******/
 let loadBossCard = async () => {
   let results = await helper.getData(urls.CARDS + "?q=hp:[320 TO *]");
+
   let boss = results[helper.getRandom(0, results.length)];
 
   // let bossDiv = document.createElement("div");
   // bossDiv.className = "boss";
 
   let bossImg = document.createElement("img");
-  bossImg.src = boss.images.large;
+  bossImg.src = boss.images.small;
   bossImg.alt = `${boss.name} designed by ${boss.artist}`;
-
   // bossDiv.append(bossImg);
   npcPlayer.append(bossImg);
 };
@@ -137,7 +137,6 @@ let loadPlayerHandCards = (shuffledDeck, noOfCards) => {
  * Allocate 6 prize cards
  *******/
 let distributeCards = async (deckCards) => {
-  helper.getID("game-board").style.display = "grid";
   helper.getID("makeDeck").style.display = "none";
   helper.getID("startGame").style.display = "none";
 
@@ -156,6 +155,8 @@ let distributeCards = async (deckCards) => {
   helper.setDroppable("discard-pile");
   helper.setDroppable("main-card");
   //helper.setDroppable("energy");
+  helper.getID("game-board").style.display = "grid";
+  helper.getID("loader").style.display = "none";
 };
 
 export { loadBossCard, distributeCards };

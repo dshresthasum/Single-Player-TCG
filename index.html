@@ -6,9 +6,13 @@
     <title>Create Deck</title>
     <link rel="stylesheet" href="css/createdeck.css" />
     <link href="css/site.css" rel="stylesheet" />
+    <script></script>
   </head>
   <body>
+    <div id="loader" style="display: none"></div>
+
     <div class="startPage">
+      <button id="clickMe">hello</button>
       <button id="makeDeck">Make a Deck</button>
       <button id="startGame">Start Game with random deck</button>
     </div>
@@ -33,6 +37,7 @@
 
     <div id="game-board" class="container">
       <div id="npc-player" class="bossSpot"></div>
+      <div id="attackBoss" class="attack">Attack</div>
       <div id="main-card" class="activeSpot"></div>
       <div id="game-deck" class="cardDeck">
         <img src="./assets/cardback.jpg" alt="pokemon card" />
@@ -47,5 +52,6 @@
       <div class="lightning"></div>
     </div>
     <script type="module" src="js/deck.js"></script>
+    <script type="module" src="js/gameplay.js"></script>
   </body>
 </html>

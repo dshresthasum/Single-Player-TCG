@@ -1,17 +1,15 @@
 import * as helper from "./elements.js";
 import * as urls from "./urls.js";
 import { distributeCards } from "./board.js";
-// Get the modal
+
 var modal = document.getElementById("myModal");
 let closeBtn = helper.getID("cancel");
-// Get the button that opens the modal
-var btn = document.getElementById("makeDeck");
 
-// Get the <span> element that closes the modal
-var span = helper.getID("submitPoke");
+var makeDeck = document.getElementById("makeDeck");
 
-// When the user clicks on the button, open the modal
-btn.onclick = function () {
+var manualGame = helper.getID("submitPoke");
+
+makeDeck.onclick = function () {
   modal.style.display = "flex";
   modal.style.flexDirection = "row";
   document.querySelector(".startPage").style.display = "none";
@@ -22,20 +20,14 @@ helper.getID("startGame").onclick = function () {
   document.querySelector(".startPage").style.display = "none";
   createCardDeck(false);
 };
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
+
+manualGame.onclick = function () {
   modal.style.display = "none";
 };
 
 closeBtn.onclick = function () {
   modal.style.display = "none";
 };
-// When the user clicks anywhere outside of the modal, close it
-// window.onclick = function (event) {
-//   if (event.target == modal) {
-//     modal.style.display = "none";
-//   }
-// };
 
 /*******
  * Generate a deck of 60 cards
@@ -44,6 +36,7 @@ closeBtn.onclick = function () {
  * 20 Trainer Cards => 7 Item, 7 Stadium and 6 Supporter Cards
  *******/
 let createCardDeck = async (manual = false) => {
+  helper.getID("loader").style.display = "block";
   let deckCards = [];
   await Promise.all([
     fetch(urls.CARDS + "?q=supertype:pokemon%20subtypes:basic"),
@@ -87,7 +80,9 @@ let createCardDeck = async (manual = false) => {
       ];
     }
   );
+  sessionStorage.setItem("deckCards", JSON.stringify(deckCards));
   console.log(deckCards);
+
   distributeCards(deckCards);
   //return deckCards;
 };
@@ -155,7 +150,7 @@ let createDeckManually = async () => {
     });
   });
   console.log(data);
-  span.addEventListener("click", () => {
+  manualGame.addEventListener("click", () => {
     if (selectedPokes.length < 20) {
       alert("You must select exactly 20 cards");
       modal.style.display = "flex";
